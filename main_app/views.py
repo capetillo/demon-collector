@@ -32,7 +32,7 @@ def about(request):
     return render(request, 'about.html')
 
 def demons_index(request):
-  demons = Demon.objects.all()
+  demons = Demon.objects.filter(user=request.user)
   return render(request, 'demons/index.html', { 'demons': demons })
 
 def demons_detail(request, demon_id):
@@ -96,16 +96,18 @@ def add_photo(request, demon_id):
       print('An error occurred uploading file to S3')
   return redirect('detail', demon_id=demon_id)
 
-  def signup(request):
-    error_message = ''
-    if request.method == 'POST':
-      form = UserCreationForm(request.POST)
-      if form.is_valid():
-        user = form.save()
-        login(request, user)
-        return redirect('index')
-      else: 
-        error_message = 'Invalid sign up - try again'
-    form = UserCreationForm()
-    context = { 'form': form, 'error_message': error_message }
-    return render(request, 'registration/signup.html', context)
+def signup(request):
+  error_message = ''
+  if request.method == 'POST':
+    # This is how to create a 'user' form object
+    # that includes the data from the browser
+    form = UserCreationForm(request.POST)
+    if form.is_valid():
+      user = form.save()
+      login(request, user)
+      return redirect('index')
+    else:
+      error_message = 'Invalid sign up - try again'
+  form = UserCreationForm()
+  context = { 'form': form, 'error_message': error_message }
+  return render(request, 'registration/signup.html', context)
