@@ -10,7 +10,10 @@ import boto3
 class DemonCreate(CreateView):
     model = Demon
     fields = ['name', 'classification', 'description', 'age']
-    success_url='/demons/'
+
+    def form_valid(self, form):
+      form.instance.user = self.request.user
+      return super().form_valid(form)
 
 class DemonUpdate(UpdateView):
     model = Demon
