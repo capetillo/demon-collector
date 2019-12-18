@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from datetime import date
+from django.contrib.auth.models import User 
 
 BODIES = (
     ('C', 'Carolina'),
@@ -29,6 +30,7 @@ class Demon(models.Model):
     description = models.TextField(max_length=300)
     age = models.CharField(max_length=20)
     sins = models.ManyToManyField(Sin)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
