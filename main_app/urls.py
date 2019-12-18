@@ -18,4 +18,5 @@ urlpatterns = [
     path('sins/create/', views.SinCreate.as_view(), name='sins_create'),
     path('sins/<int:pk>/update/', views.SinUpdate.as_view(), name='sins_update'),
     path('sins/<int:pk>/delete/', views.SinDelete.as_view(), name='sins_delete'),
+    path('accounts/signup/', views.signup, name='signup'),
 ]
