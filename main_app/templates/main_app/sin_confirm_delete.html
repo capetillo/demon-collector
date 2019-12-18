@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Delete Sin</h1>
+
+  <h4>You may delete <span class="teal-text">{{ object.name }}</span> here, but you will forever be haunted</h4>
+
+  <form action="" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Save me! I want to delete it!" class="btn">
+    <a href="{% url 'sins_detail' object.id %}">Cancel</a>
+  </form>
+{% endblock %}
